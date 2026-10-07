@@ -1,50 +1,30 @@
-class Account 
-{
-    String name;
-    Account(String name) 
-    {
-        this.name = name;
-    }
-}
-public class DeadlockDemo 
-{
-    public static void main(String[] args) throws Exception 
-    {
-        Account a = new Account("Account A");
-        Account b = new Account("Account B");
-        Thread t1 = new Thread(() -> 
-        {
-            synchronized (a) 
-            {
-                System.out.println("T1 locked A");
-                try 
-                {
+class DeadlockDemo {
+    static Object account1 = new Object();
+    static Object account2 = new Object();
+    public static void main(String[] args) {
+        Thread t1 = new Thread(() -> {
+            synchronized (account1) {
+                System.out.println("Thread 1 locked Account 1");
+                try {
                     Thread.sleep(100);
-                } catch (Exception e) {}
-                synchronized (b) 
-                {
-                    System.out.println("T1 locked B");
+                } catch (InterruptedException e) {
+                }
+                synchronized (account2) {
+                    System.out.println("Thread 1 locked Account 2");
                 }
             }
         });
-        Thread t2 = new Thread(() -> 
-        {
-            synchronized (b) 
-            {
-                System.out.println("T2 locked B");
-                try 
-                {
-                    Thread.sleep(100);
-                } catch (Exception e) {}
-                synchronized (a) 
-                {
-                    System.out.println("T2 locked A");
+        Thread t2 = new Thread(() -> {
+            synchronized (account1) {
+                System.out.println("Thread 2 locked Account 1");
+                synchronized (account2) {
+                    System.out.println("Thread 2 locked Account 2");
                 }
             }
         });
         t1.start();
         t2.start();
-        t1.join();
-        t2.join();
+        System.out.println("Both threads use the same lock order.");
+        System.out.println("Deadlock is avoided.");
     }
 }
