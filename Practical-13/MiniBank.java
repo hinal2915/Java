@@ -1,6 +1,9 @@
-import java.lang.reflect.Field;
-import java.util.*;
-@interface Id {}
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+@interface Id {
+}
 class Account 
 {
     @Id
