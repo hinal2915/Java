@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.lang.reflect.Field;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
