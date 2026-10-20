@@ -1,0 +1,4 @@
+===== MiniBank Report =====
+AC01 | Hinal | Balance: 657089
+
+Total Accounts: 1
